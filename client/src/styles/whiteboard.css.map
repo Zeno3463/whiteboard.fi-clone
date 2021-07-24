@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,WAAW,CAAA;EACV,KAAK,EAAE,WAAW;EAClB,MAAM,EAAE,WAAW;CAInB;;AAND,AAGC,WAHU,CAGV,OAAO,CAAA;EACN,MAAM,EAAE,eAAe;CACvB",
-    "sources": [
-        "whiteboard.scss"
-    ],
-    "names": [],
-    "file": "whiteboard.css"
-}
