@@ -1,14 +1,24 @@
-import React from 'react'
-import { SketchField, Tools } from 'react-sketch'
+import React, { Component } from 'react'
+import "./styles/whiteboard.css"
 
-export default function App() {
-	return (
-		<div>
-			<SketchField width='1024px' 
-					height='768px' 
-					tool={Tools.Pencil} 
-					lineColor='black'
-					lineWidth={3}/>
-		</div>
-	)
+const deviceWidth = Math.max(
+	document.body.scrollWidth,
+	document.documentElement.scrollWidth,
+	document.body.offsetWidth,
+	document.documentElement.offsetWidth,
+	document.documentElement.clientWidth
+);
+
+const deviceHeight = Math.max(
+	document.body.scrollHeight,
+	document.documentElement.scrollHeight,
+	document.body.offsetHeight,
+	document.documentElement.offsetHeight,
+	document.documentElement.clientHeight
+);
+
+export default class App extends Component {
+
 }
+
+
