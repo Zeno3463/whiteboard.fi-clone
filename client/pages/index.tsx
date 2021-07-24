@@ -8,22 +8,24 @@ import canvasStyle from "../styles/canvas/Canvas.module.css"
 export default class index extends Component {
 
 	// variable declaration
-	state = {
-		color: "#000000",
-		width: 400,
-		height: 400,
-		brushRadius: 10,
-		lazyRadius: 12
-	}
 	canvas: CanvasDraw | null = null;
 	canvasData: any = "";
-
-	// private function
+	deviceWidth = 1024;
+	deviceHeight = 600;
+	state = {
+		color: "#000000",
+		width: this.deviceWidth / 2,
+		height: this.deviceHeight / 2,
+		brushRadius: 1,
+		lazyRadius: 0
+	}
+	
+	// private functions
 	save = () => {
 		this.canvasData = this.canvas?.getSaveData();
 	}
 	handleColorChange = (color: ColorResult) => {
-		this.setState({color: color.hex})
+		this.setState({color: color.hex});
 	}
 
 	render() {
