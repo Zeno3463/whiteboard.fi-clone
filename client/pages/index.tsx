@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import CanvasDraw from "react-canvas-draw"
 import { CompactPicker ,ColorResult } from 'react-color'
 import canvasStyle from "../styles/canvas/Canvas.module.css"
+import io from 'socket.io-client'
 
 export default class index extends Component {
 
@@ -19,13 +20,26 @@ export default class index extends Component {
 		brushRadius: 1,
 		lazyRadius: 0
 	}
+	endPoint = "http://127.0.0.1:5000/"
+	socket = io(this.endPoint)
 	
 	// private functions
 	save = () => {
 		this.canvasData = this.canvas?.getSaveData();
+		this.socket.emit("update-canvas", {roomId: 1, canvasData: this.canvasData});
 	}
 	handleColorChange = (color: ColorResult) => {
 		this.setState({color: color.hex});
+	}
+
+	// socket.io functions
+	componentDidMount() {
+		this.socket.on("connect", () => {
+			console.log("connected")
+		})
+		this.socket.on("update-canvas", data => {
+			console.log(data)
+		})
 	}
 
 	render() {
