@@ -7,15 +7,15 @@ export default class index extends Component {
 	// variable declaration
 	state = {
 		id: "",
-		room: null
+		room: null,
+		isTeacher: false
 	}
 	endPoint = "http://127.0.0.1:5000/"
 	socket = io(this.endPoint)
 	
 	// private functions
 	joinRoom = () => {
-		this.setState({room: <Room id={this.state.id} />});
-		this.socket.emit("join-room", {channel: this.state.id})
+		this.setState({room: <Room id={this.state.id} isTeacher={this.state.isTeacher} />});
 	}
 
 	render() {
@@ -23,6 +23,7 @@ export default class index extends Component {
 			<div>
 				<input type="text" onChange={e => this.setState({id: e.target.value})} />
 				<button onClick={this.joinRoom} >join room</button>
+				Is Teacher: <button onClick={() => this.setState({isTeacher: !this.state.isTeacher})}>{this.state.isTeacher.toString()}</button>
 				{this.state.room}
 			</div>
 		)

@@ -6,36 +6,36 @@ import { CompactPicker ,ColorResult } from 'react-color'
 import canvasStyle from "../styles/canvas/Canvas.module.css"
 import io from 'socket.io-client'
 
-export default class Room extends Component<{id?: string}> {
-
-	constructor (props: any) {
-		super(props);
-	}
-
+export default class Room extends Component<{id: string, isTeacher: boolean}> {
 	// variable declaration
 	canvas: CanvasDraw | null = null;
 	canvasData: any = "";
 	deviceWidth = 1024;
 	deviceHeight = 600;
-	state = {
+	state: {[key: string]:any} = {
 		color: "#000000",
 		width: this.deviceWidth / 2,
 		height: this.deviceHeight / 2,
 		brushRadius: 1,
 		lazyRadius: 0,
-		isTeacher: false,
 		studentWhiteboards: []
 	}
 	endPoint = "http://127.0.0.1:5000/"
 	socket = io(this.endPoint)
 	teacherCanvas: CanvasDraw | null = null;
 	teacherCanvasData: any = "";
+	studentWhiteboards: Array<any> = [];
+
+	constructor (props: any) {
+		super(props);
+		this.socket.emit("join-room", {roomId: this.props.id, isTeacher: this.props.isTeacher});
+	}
 	
 	// private functions
 	save = () => {
 		this.canvasData = this.canvas?.getSaveData();
-		if (this.state.isTeacher) this.socket.emit("update-teacher-canvas", {roomId: 1, canvasData: this.canvasData});
-		else this.socket.emit("update-student-canvas", {roomId: 1, canvasData: this.canvasData});
+		if (this.props.isTeacher) this.socket.emit("update-teacher-canvas", {roomId: 1, canvasData: this.canvasData});
+		else this.socket.emit("update-student-canvas", {roomId: this.props.id, canvasData: this.canvasData});
 	}
 	handleColorChange = (color: ColorResult) => {
 		this.setState({color: color.hex});
@@ -44,18 +44,30 @@ export default class Room extends Component<{id?: string}> {
 	// socket.io functions
 	componentDidMount() {
 		this.socket.on("update-teacher-canvas", data => {
-			if (!this.state.isTeacher){
+			if (!this.props.isTeacher){
 				this.teacherCanvasData = data.canvasData
 			}
 			this.teacherCanvas?.loadSaveData(this.teacherCanvasData, true)
 		})
 		this.socket.on("update-student-canvas", data => {
-			if (this.state.isTeacher){
+			if (this.props.isTeacher){
 
 			}
 		})
 		this.socket.on("join-room", data => {
-			console.log(data)
+			if (!data.isTeacher) {
+				var stuWhiteboard = this.state.studentWhiteboards;
+				this.studentWhiteboards.push({
+					id: 1,
+					height: this.deviceHeight / 4,
+					width: this.deviceWidth / 4,
+					canvas: null,
+					canvasData: null
+				})
+				stuWhiteboard.push(null);
+				this.setState({studentWhiteboards: stuWhiteboard});
+			}
+			console.log(this.studentWhiteboards)
 		})
 	}
 
@@ -63,7 +75,7 @@ export default class Room extends Component<{id?: string}> {
 		return (
 			<div>
 				<div className={canvasStyle.canvasContainer}>
-					{!this.state.isTeacher ?
+					{!this.props.isTeacher ?
 					<CanvasDraw 
 					ref={canvas => (this.teacherCanvas = canvas)}
 					disabled 
@@ -90,7 +102,17 @@ export default class Room extends Component<{id?: string}> {
 						<input type="number" min="1" onChange={e => this.setState({brushRadius: e.target.value})} />
 					</div>
 				</div>
-				<button onClick={() => this.setState({isTeacher: !this.state.isTeacher})}>{this.state.isTeacher.toString()}</button>
+				<div className={canvasStyle.canvasContainer}>
+					{this.state.studentWhiteboards.map((e: any, i: number) =>
+					<CanvasDraw
+					ref={canvas => (this.studentWhiteboards[i].canvas = canvas)}
+					canvasWidth={this.studentWhiteboards[i].width}
+					canvasHeight={this.studentWhiteboards[i].height}
+					disabled
+					hideGrid
+					/>
+					)}
+				</div>
 			</div>
 		)
 	}
