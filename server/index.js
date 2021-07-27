@@ -43,4 +43,4 @@ io.on("connection", socket => {
         io.to(data.roomId).emit("update-student-canvas", data);
     });
 });
-server.listen(3001, () => console.log("> Ready on http://localhost:3001"));
+server.listen(process.env.PORT || 3001, () => console.log("> Ready on http://localhost:3001"));
