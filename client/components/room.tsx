@@ -58,11 +58,12 @@ export default class Room extends Component<{roomId: string, isTeacher: boolean,
 		})
 
 		this.socket.on("update-student-canvas", data => {
-			for (var e of this.studentWhiteboards)
-				if (e.userName === data.userName) {
-					e.canvas.loadSaveData(data.canvasData, true)
-					break;
-				}
+			if (this.props.isTeacher)
+				for (var e of this.studentWhiteboards)
+					if (e.userName === data.userName) {
+						e.canvas.loadSaveData(data.canvasData, true)
+						break;
+					}
 		})
 
 		this.socket.on("join-room", data => {
