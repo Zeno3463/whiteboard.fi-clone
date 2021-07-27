@@ -5,7 +5,7 @@ import * as socketio from "socket.io";
 ////// VARIABLE DECLARATION //////
 const app = express();
 const server = http.createServer(app);
-const io = new socketio.Server(server, {cors: {origin: "http://localhost:3000"}});
+const io = new socketio.Server(server, {cors: {origin: "*"}});
 
 ////// SOCKET.IO FUNCTIONS //////
 io.on("connection", socket => {

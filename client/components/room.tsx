@@ -19,7 +19,7 @@ export default class Room extends Component<{roomId: string, isTeacher: boolean,
 		lazyRadius: 0,
 		studentWhiteboards: []
 	}
-	endPoint = "http://127.0.0.1:3001"
+	endPoint = "https://whiteboardfi-clone.zeno3463.repl.co"
 	socket = io(this.endPoint)
 	teacherCanvas: CanvasDraw | null = null;
 	teacherCanvasData: any = "";
