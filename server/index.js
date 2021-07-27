@@ -25,11 +25,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const http = __importStar(require("http"));
 const socketio = __importStar(require("socket.io"));
-// variable declarations
+////// VARIABLE DECLARATION //////
 const app = express_1.default();
 const server = http.createServer(app);
 const io = new socketio.Server(server, { cors: { origin: "http://localhost:3000" } });
-// socket functions
+////// SOCKET.IO FUNCTIONS //////
 io.on("connection", socket => {
     console.log("connected");
     socket.on("join-room", data => {

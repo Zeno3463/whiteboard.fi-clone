@@ -4,5 +4,46 @@
   width: -moz-fit-content;
   width: fit-content;
   margin: 1rem;
+  background-color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.canvasContainer .canvas {
+  margin: 1%;
+  border: 1px solid black;
+  -webkit-box-shadow: 0px 0px 10px 0px black;
+          box-shadow: 0px 0px 10px 0px black;
+}
+
+.canvasContainer .canvasSettings {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.canvasContainer .canvasSettings > * {
+  margin: 1%;
+}
+
+.canvasContainer .canvasSettings input {
+  width: 50%;
+}
+
+.canvasContainer .canvasSettings button {
+  background-color: #FBB244;
+  color: white;
+  font-size: 150%;
+  -webkit-box-shadow: 0px 0px 10px 0px black;
+          box-shadow: 0px 0px 10px 0px black;
+  -webkit-transition: all 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
+}
+
+.canvasContainer .canvasSettings button:hover {
+  -webkit-box-shadow: 0px 0px 20px 0px black;
+          box-shadow: 0px 0px 20px 0px black;
+  cursor: pointer;
 }
 /*# sourceMappingURL=Canvas.module.css.map */

@@ -1,31 +1,41 @@
 import React, { Component } from 'react'
-import Room from "../components/room"
-import { v4 } from "uuid";
+import Form from "../components/form"
+import style from "../styles/front-page/FrontPage.module.css"
 
 export default class index extends Component {
 	
-	// variable declaration
+	/// VARIABLE DECLARATION ///
 	state = {
-		id: v4(),
-		name: "",
-		room: null,
-		isTeacher: false
+		form: null,
 	}
 	
-	// private functions
-	joinRoom = () => {
-		this.setState({room: <Room roomId={this.state.id} isTeacher={this.state.isTeacher} userName={this.state.name} />});
-	}
-
 	render() {
 		return (
-			<div>
-				id: <input type="text" onChange={e => this.setState({id: e.target.value})} />
-				name: <input type="text" onChange={e => this.setState({name: e.target.value})} />
-				<button onClick={this.joinRoom} >join room</button>
-				Is Teacher: <button onClick={() => this.setState({isTeacher: !this.state.isTeacher})}>{this.state.isTeacher.toString()}</button>
-				{this.state.id}
-				{this.state.room}
+			<div className={style.container}>
+				<nav className={style.nav}>
+					<div>
+						<h1>WHITEBOARD.fi CLONE</h1>
+						<ul>
+							<li>HOME</li>
+							<li>FEATURES</li>
+							<li>PRICING</li>
+							<li>FAQ</li>
+							<li>ABOUT</li>
+							<li>NEWS</li>
+							<li>BLOG</li>
+						</ul>
+					</div>
+					<div>
+						<button onClick={() => this.setState({form: <Form isTeacher={true} />})}>NEW</button>
+						<button onClick={() => this.setState({form: <Form isTeacher={false} />})}>JOIN</button>
+					</div>
+				</nav>
+				<div className={style.main}>
+					<h1>WHITEBOARD.fi CLONE</h1>
+					<button onClick={() => this.setState({form: <Form isTeacher={true} />})}>NEW CLASS</button>
+					<button onClick={() => this.setState({form: <Form isTeacher={false} />})}>JOIN CLASS</button>
+				</div>
+				{this.state.form}
 			</div>
 		)
 	}
