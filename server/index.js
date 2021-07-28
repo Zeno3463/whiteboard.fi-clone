@@ -28,7 +28,7 @@ const socketio = __importStar(require("socket.io"));
 ////// VARIABLE DECLARATION //////
 const app = express_1.default();
 const server = http.createServer(app);
-const io = new socketio.Server(server, { cors: { origin: "http://localhost:3000" } });
+const io = new socketio.Server(server, { cors: { origin: "*" } });
 ////// SOCKET.IO FUNCTIONS //////
 io.on("connection", socket => {
     console.log("connected");
